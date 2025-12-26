@@ -1,12 +1,27 @@
 #!/bin/bash
 
-# safe-npm.sh: Wrapper for npm that adds min-age enforcement using --before for install/ci with auto-retry on no-version errors.
-# It allows overriding default min age (7 days) via --min-age-days=N (e.g., ./safe-npm.sh install --min-age-days=5).
+# minage-npm.sh: Wrapper for npm that adds min-age enforcement using --before for install/ci with auto-retry on no-version errors.
+# It allows overriding default min age (7 days) via --min-age-days=N (e.g., ./minage-npm.sh install --min-age-days=5).
 # It retries with reduced days (from N going down to 0), if ETARGET/no matching version error detected.
-# Usage: ./safe-npm.sh install [args] [--min-age-days=N]  (or alias to npm)
+# Usage: ./minage-npm.sh install [args] [--min-age-days=N]  (or alias to npm)
 # Handles: Cross-platform date (Linux/macOS), skips if --before manual, error propagation, real-time output.
 # A sample package.json provided in smoke-tests to allow testing for packages published for the first time after the min-age condition: min-age/package.json
-# Test: ./safe-npm.sh install --dry-run --min-age-days=360 ../smoke-tests/min-age/package.json
+# Test: ./minage-npm.sh install --dry-run --min-age-days=360 ../smoke-tests/min-age/package.json
+# {
+#   "name": "test-minage-npm",
+#   "version": "1.0.0",
+#   "description": "Sample project to test minage-npm.sh with a recently published package (maskicons).",
+#   "main": "index.js",
+#   "scripts": {
+#     "test": "echo \"Error: no test specified\" && exit 1"
+#   },
+#   "dependencies": {
+#     "lodash": "^4.17.21",
+#     "maskicons": "^0.1.0"
+#   },
+#   "author": "",
+#   "license": "ISC"
+# }
 
 set -euo pipefail
 
